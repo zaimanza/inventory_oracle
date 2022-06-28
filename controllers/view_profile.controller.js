@@ -44,22 +44,25 @@ router.post('/crypto_wallet/check/:address', async (req, res) => {
         const assetsModel = await Assets()
         const transactionsModel = await Transactions()
         const metadatasModel = await Metadatas()
-        const props = req.params
+        var props = req.params
 
         if (
             !props?.address
         )
             return res.status(400).json("Unauthorized")
-
+        console.log(props?.address)
         var fetchedMetadata = await metadatasModel.findOne({
-            "metadata.address": props?.address?.toString()
+            "metadata.address": props?.address
         })
-
+        console.log(fetchedMetadata)
         var transactions = {}
 
         if (fetchedMetadata) {
             const tempData = await fetchTransaction(fetchedMetadata?.id)
-            transactions = tempData.data
+            transactions = {
+                asset: tempData.data?.asset?.data,
+                metadata: tempData.data?.metadata
+            }
         } else {
             return res.status(200).json(transactions)
         }

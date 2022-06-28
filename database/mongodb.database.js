@@ -16,4 +16,4 @@ exports.connectDB = async () => {
 }
 exports.Assets = async () => await db.collection('assets')
 exports.Transactions = async () => await db.collection('transactions')
-exports.Metadatas = async () => await db.collection('metadatas')
+exports.Metadatas = async () => await db.collection('metadata')

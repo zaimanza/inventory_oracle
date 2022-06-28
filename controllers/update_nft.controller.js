@@ -12,7 +12,7 @@ router.post('/update_nft', async (req, res) => {
         const assetsModel = await Assets()
         const transactionsModel = await Transactions()
 
-        const props = req.body
+        var props = req.body
 
         if (!props?.nft)
             return res.status(400).json("Unauthorized")
@@ -21,23 +21,16 @@ router.post('/update_nft', async (req, res) => {
             "data.did": props?.nft?.did.toString()
         })
 
+        delete props.nft.did;
+
         var fetchedRaffleLatestTransaction = await fetchLatestTransaction(fetchedAsset?.id)
         if (!fetchedRaffleLatestTransaction) {
             return res.status(400).json("Transaction does not exist")
         }
 
-
         var appendNft = await updateSingleAsset({
             txCreatedID: fetchedRaffleLatestTransaction?.id,
-            metadata: {
-                name: props?.nft?.name,
-                description: props?.nft?.description,
-                type: props?.nft?.type,
-                image: props?.nft?.image,
-                attributes: props?.nft?.attributes,
-                promotionDiscount: props?.nft?.promotionDiscount,
-                voucher: props?.nft?.voucher,
-            },
+            metadata: props?.nft,
             publicKey: user_wallet.publicKey,
             privateKey: user_wallet.privateKey,
         })

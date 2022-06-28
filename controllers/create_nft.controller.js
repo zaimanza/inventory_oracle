@@ -12,7 +12,6 @@ router.post('/create_nft', async (req, res) => {
         if (!props?.nft)
             return res.status(400).json("Unauthorized")
         console.log(props?.nft)
-        var returnData = {}
 
         var createdNft = await createNft({
             asset: {
@@ -32,15 +31,13 @@ router.post('/create_nft', async (req, res) => {
             privateKey: user_wallet?.privateKey
         })
 
+        var returnData = {}
+
         if (createdNft) {
             returnData = createdNft
         }
 
-        if (JSON.stringify(returnData) != JSON.stringify({})) {
-            res.status(200).json(true)
-        } else {
-            res.status(200).json(false)
-        }
+        res.status(200).json(returnData)
     } catch (error) {
         res.status(400).json(error)
     }

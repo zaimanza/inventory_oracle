@@ -107,3 +107,26 @@ exports.updateSingleAsset = async ({ txCreatedID, publicKey, privateKey, metadat
     } catch (error) {
     }
 }
+
+exports.fetchTransaction = async (assetId) => {
+    try {
+
+        const assetsModel = await Assets()
+
+        var list = {}
+        list = await axios.get(`${API_PATH}transactions/${assetId}`).catch(function (error) {
+            if (error) {
+                console.log("Error in axios")
+            }
+        })
+        if (!list) {
+            list = {}
+        }
+
+        if (Object.keys(list).length === 0) return
+
+        return await list
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}

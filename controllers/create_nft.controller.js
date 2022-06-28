@@ -11,12 +11,11 @@ router.post('/create_nft', async (req, res) => {
 
         if (!props?.nft)
             return res.status(400).json("Unauthorized")
-        console.log(props?.nft)
 
         var createdNft = await createNft({
             asset: {
                 type: "nft",
-                id: props?.nft?.id.toString()
+                did: props?.nft?.did.toString()
             },
             metadata: {
                 name: props?.nft?.name,

@@ -18,7 +18,7 @@ router.post('/update_nft', async (req, res) => {
             return res.status(400).json("Unauthorized")
 
         var fetchedAsset = await assetsModel.findOne({
-            "data.id": props?.nft?.id.toString()
+            "data.did": props?.nft?.did.toString()
         })
 
         var fetchedRaffleLatestTransaction = await fetchLatestTransaction(fetchedAsset?.id)
@@ -45,6 +45,7 @@ router.post('/update_nft', async (req, res) => {
         var returnData = {}
 
         if (appendNft) {
+            console.log(appendNft)
             returnData = appendNft
         }
 

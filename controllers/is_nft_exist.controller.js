@@ -15,7 +15,6 @@ router.post('/is_nft_exist', async (req, res) => {
         if (!props?.id)
             return res.status(400).json("Unauthorized")
 
-
         var fetchedAsset = await assetsModel.findOne({
             "data.id": props?.id?.toString(),
         })
